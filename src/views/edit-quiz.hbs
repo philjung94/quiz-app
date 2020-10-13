@@ -1,0 +1,90 @@
+<center>
+  <h1>
+    Quiz editor
+  </h1>
+  <hr>
+  <form method="POST" action="{{action}}">
+    <input type="hidden" name="_method" value="{{method}}">
+    <input type="hidden" name="id" value="{{id}}">
+    <h2>
+      Quiz details
+    </h2>
+    <table border="1" cellpadding="10" cellspacing="5">
+      <tr>
+        <th>
+          Name
+        </th>
+        <td>
+          <input type="text" name="name" value="{{quiz.name}}" placeholder="Enter quiz name">
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Description
+        </th>
+        <td>
+          <textarea name="description" placeholder="Enter quiz description">{{quiz.description}}</textarea>
+        </td>
+      </tr>
+    </table>
+    <h2>
+      Quiz problems
+    </h2>
+    <table border="1" cellpadding="10" cellspacing="5">
+      <thead>
+        <tr>
+          <th>
+            Question
+          </th>
+          <th>
+            Answer
+          </th>
+          <th>
+            Delete
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each quiz.problems}}
+        <tr>
+          <td>
+            <textarea name="problems[{{@index}}][question]" placeholder="Enter question">{{this.question}}</textarea>
+          </td>
+          <td>
+            <textarea name="problems[{{@index}}][answer]" placeholder="Enter answer">{{this.answer}}</textarea>
+          </td>
+          <td>
+            <center>
+              <input type="checkbox" name="deletions" value="{{@index}}">
+            </center>
+          </td>
+        </tr>
+        {{/each}}
+        <tr>
+          <td colspan="3">
+            <center>
+              <div>
+                <input id="append" type="checkbox" name="append">
+                <label for="append">
+                  Add a problem
+                </label>
+              </div>
+              <div>
+                <input type="submit" value="Save">
+              </div>
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+  <hr>
+  {{#if quiz._id}}
+  <form method="POST" action="/quizzes/{{quiz._id}}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="id" value="{{quiz._id}}">
+    <input type="submit" value="Delete quiz">
+  </form>
+  {{/if}}
+</center>
+</div>

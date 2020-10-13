@@ -1,0 +1,60 @@
+<center>
+  <h1>
+    {{name}}
+  </h1>
+  <h2>
+    {{description}}
+  </h2>
+  <form method="POST" action="/active/{{_id}}">
+    <input type="hidden" name="_method" value="PUT">
+    <table cellpadding="10" cellspacing="5" border="1">
+      <tbody>
+        {{#each problems}}
+        <tr>
+          <td>
+            <b>Question {{sum @index 1}}: </b>
+            {{this.question}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{#if ../isComplete}}
+            <h3>
+              Response
+            </h3>
+            <p>
+              {{this.response}}
+            </p>
+            <hr>
+            <h3>
+              Answer
+            </h3>
+            <p>
+              {{this.answer}}
+            </p>
+            {{else}}
+            <input type="hidden" name="problems[{{@index}}][question]" value="{{this.question}}">
+            <input type="hidden" name="problems[{{@index}}][answer]" value="{{this.answer}}">
+            <textarea name="problems[{{@index}}][response]">{{this.response}}</textarea>
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+        <tr>
+          <td>
+            <input id="completed" {{#if isComplete}}disabled{{/if}} type="checkbox" name="isComplete"
+              {{#if isComplete}}checked{{/if}}>
+            <label for="completed">Completed</label>
+          </td>
+        </tr>
+        {{#unless isComplete}}
+        <tr>
+          <td>
+            <input type="submit" value="Finish quiz">
+          </td>
+        </tr>
+        {{/unless}}
+      </tbody>
+    </table>
+  </form>
+</center>

@@ -1,0 +1,48 @@
+<center>
+  <h1>
+    Active quizzes
+  </h1>
+  <table cellpadding="10" cellspacing="5" border="1">
+    <thead>
+      <th>
+        Quiz name
+      </th>
+      <th>
+        Completed
+      </th>
+      <th>
+        Links
+      </th>
+    </thead>
+    <tbody>
+      {{#each active}}
+      <tr>
+        <td>
+          {{this.quizName}}
+        </td>
+        <td>
+          {{this.isComplete}}
+        </td>
+        <td>
+          <a href="/active/{{this._id}}">
+            <button>
+              {{#if this.isComplete}}
+              View
+              {{else}}
+              Resume
+              {{/if}}
+            </button>
+          </a>
+          <hr>
+          <form method="POST" action="/active/{{this._id}}">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</center>

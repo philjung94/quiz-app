@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  web: # Node apps are easy to run locally but this prevents environment discrepancies.
+    image: node:12
+    working_dir: /home/node/app
+    user: node
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/home/node/app:z # We need the "z" for selinux.
+    command: bash -c "yarn install && yarn develop"
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL="mongodb://db:27017"
+      - MONGO_INITDB_DATABASE=test
+  db:
+    image: mongo:latest
+    user: mongodb
+    restart: always # Restart if it stops (on error or otherwise)
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=test
+    volumes: 
+      - data:/data/db:z
+
+volumes:
+  data:

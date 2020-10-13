@@ -1,0 +1,60 @@
+<center>
+  <h1>
+    Quizzes
+  </h1>
+  <table cellpadding="10" cellspacing="5" border="1">
+    <thead>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+      <th>
+        Questions
+      </th>
+      <th>
+        Links
+      </th>
+    </thead>
+    <tbody>
+      {{#each quizzes}}
+      <tr>
+        <td>
+          {{this.name}}
+        </td>
+        <td>
+          {{this.description}}
+        </td>
+        <td>
+          {{count this.problems}}
+        </td>
+        <td>
+          <a href="/quizzes/{{this._id}}/edit">
+            <button>
+              Edit
+            </button>
+          </a>
+          <hr>
+          <form method="POST" action="/active/{{this._id}}">
+            <button>
+              Start quiz
+            </button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+      <tr>
+        <td colspan="4">
+          <center>
+            <a href="/quizzes/new">
+              <button>
+                Create new
+              </button>
+            </a>
+          </center>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</center>
