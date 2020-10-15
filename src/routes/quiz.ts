@@ -25,6 +25,15 @@ router.get("/quizzes/:id/edit", async (req, res) => {
   });
 });
 
+router.get("/quizzes/:id/export", async (req, res) => {
+  const { id } = req.params;
+  const quiz = await Quiz.get(new Mongo.ObjectId(id));
+  delete quiz._id;
+  res.setHeader("Content-Disposition", `attachment; filename=${quiz.name}.json`);
+  res.setHeader("Content-Type", "application/json");
+  res.send(JSON.stringify(quiz));
+});
+
 // CRUD routes
 router.post("/quizzes", async (req, res) => {
   const { name, description, append } = req.body;
@@ -44,6 +53,18 @@ router.put("/quizzes/:id", async (req, res) => {
     });
   await Quiz.update(new Mongo.ObjectId(id), name, description, problems);
   return res.redirect(`/quizzes/${id}/edit`);
+});
+
+router.post("/import/:id", async (req, res) => {
+  const { id } = req.params;
+  if (req.files) {
+    const { name, description, problems }= await Quiz.get(new Mongo.ObjectId(id));
+    const { problems: newProblems } = JSON.parse(req.files.import_file.data.toString("utf-8"));
+    await Quiz.update(new Mongo.ObjectId(id), name, description, problems.concat(newProblems));
+    return res.redirect(`/quizzes/${id}/edit`);
+  } else {
+    throw new Error("No file uploaded");
+  }
 });
 
 router.delete("/quizzes/:id", async (req, res) => {

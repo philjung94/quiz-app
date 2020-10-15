@@ -7,6 +7,7 @@ export type Problem = {
 };
 
 export type Quiz = {
+  _id?: string;
   name: string;
   description: string;
   problems: Problem[];
@@ -28,7 +29,7 @@ export default {
     return collection.find().toArray();
   },
   update(_id: Mongo.ObjectId, name: string, description: string, problems: Problem[]) {
-    const quiz: Quiz = { name, description, problems };
+    const quiz: Quiz = { name, description, problems } as Quiz;
     return collection.findOneAndUpdate(
       { _id },
       {

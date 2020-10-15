@@ -83,7 +83,17 @@
   <form method="POST" action="/quizzes/{{quiz._id}}">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="id" value="{{quiz._id}}">
-    <input type="submit" value="Delete quiz">
+    <input type="submit" value="Delete this quiz">
+  </form>
+  <hr>
+  <form method="GET" action="/quizzes/{{quiz._id}}/export">
+    <input type="submit" value="Export this quiz">
+  </form>
+  <hr>
+  <form method="POST" action="/import/{{quiz._id}}" enctype="multipart/form-data">
+    <input name="import_file" type="file">
+    <br>
+    <input type="submit" value="Import quiz">
   </form>
   {{/if}}
 </center>

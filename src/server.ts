@@ -2,6 +2,7 @@ import path from "path";
 import express from "express";
 import hbs from "express-handlebars";
 import methodOverride from "method-override";
+import fileUpload from "express-fileupload";
 import * as db from "./db";
 import * as helpers from "./helpers";
 
@@ -27,6 +28,7 @@ async function setupApp() {
       }
     }),
   );
+  app.use(fileUpload());
   app.use(routes);
 
   // Home
