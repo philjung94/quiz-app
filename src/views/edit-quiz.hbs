@@ -23,7 +23,7 @@
           Description
         </th>
         <td>
-          <textarea name="description" placeholder="Enter quiz description">{{quiz.description}}</textarea>
+          <textarea rows="6" cols="30" name="description" placeholder="Enter quiz description">{{quiz.description}}</textarea>
         </td>
       </tr>
     </table>
@@ -48,10 +48,10 @@
         {{#each quiz.problems}}
         <tr>
           <td>
-            <textarea name="problems[{{@index}}][question]" placeholder="Enter question">{{this.question}}</textarea>
+            <textarea cols="30" rows="6" name="problems[{{@index}}][question]" placeholder="Enter question">{{this.question}}</textarea>
           </td>
           <td>
-            <textarea name="problems[{{@index}}][answer]" placeholder="Enter answer">{{this.answer}}</textarea>
+            <textarea cols="30" rows="6" name="problems[{{@index}}][answer]" placeholder="Enter answer">{{this.answer}}</textarea>
           </td>
           <td>
             <center>
